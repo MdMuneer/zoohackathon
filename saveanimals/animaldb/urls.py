@@ -6,5 +6,6 @@ urlpatterns = [
 
     path('', animal_list, name="animal_list"),
     re_path(r'^(?P<slug>[\w-]+)/$',animal_detail, name="animal_detail")
-   
+
 ]
+
