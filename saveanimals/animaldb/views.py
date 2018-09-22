@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from .models import AnimalDb, AnimalProduct
+import geocoder
 # Create your views here.
 
 def animal_list(request):
-    animals_list = AnimalDb.objects.all()
+    g = geocoder.ip("me")
+    animals_list = AnimalDb.objects.filter(location=g.state.lower())
 
     context = {
         "object_list": animals_list,
