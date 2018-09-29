@@ -5,10 +5,11 @@ import geocoder
 
 def animal_list(request):
     g = geocoder.ip("me")
-    animals_list = AnimalDb.objects.filter(location=g.state.lower())
-
+    animals_list = AnimalDb.objects.filter(location=g.state.lower())#location=g.state.lower()
+    print(g.state)
     context = {
         "object_list": animals_list,
+        "location" : g.state
     }
     return render(request, 'list.html', context)
 

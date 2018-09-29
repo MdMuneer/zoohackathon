@@ -1,37 +1,224 @@
 {% extends 'base.html' %}
-{% block head %}    
-    <style type="text/css">
-        #location {
-            /*width: 100vw;*/
-            display: inline-block;
-            margin-left: auto;
-            margin-right: auto;
+{% block head %}
+<style type="text/css">
+    #location {
+        /*width: 100vw;*/
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    body {
+        margin: 0;
+        background: rgb(241, 241, 241);
+        width: 100%;
+        overflow-x: hidden;
+
+    }
+
+    .bulging {
+        animation: bulge 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s infinite;
+        animation-direction: alternate;
+
+    }
+
+    .marker {
+        display: none;
+    }
+
+    .rotation {
+        animation: rotate 2s infinite linear;
+
+    }
+
+    .bulging-and-rotation {
+        animation: bulnrot 2s infinite linear;
+        transition: all 2s;
+    }
+
+    .header {
+        width: 100%;
+        height: 60px;
+        position: sticky;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-top: -1px;
+        top: 0;
+        background: rgb(70, 189, 86);
+    }
+
+    .loc_text {
+        font-family: Arial, Helvetica, sans-serif;
+        letter-spacing: 2.5px;
+        font-size: 11px;
+        color: rgb(255, 255, 255);
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .loc_loader {
+        width: 200px;
+        height: 200px;
+        box-shadow: inset 0 0 90px 20px rgba(0, 0, 0, 0.034);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        background: rgba(96, 241, 38, 0.418);
+        /* display: none; */
+    }
+
+    .wild-container {
+        width: 100px;
+        height: 100px;
+       
+        margin: 5px;
+        border-radius: 100%;
+        overflow: hidden;
+        background: rgb(236, 121, 26);
+        padding: 18px;
+        background-size: cover;
+
+    }
+
+.port{
+    /* display: none; */
+    opacity: 0;
+    animation: fadeIn 0.3s ease-out 1.2s;
+    animation-fill-mode: forwards;
+}
+a{
+    text-decoration: none;
+}
+
+.logo{
+    height:100%; 
+    animation: shut 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s;
+    animation-fill-mode: forwards;
+}
+
+    .title{
+        font-size: 18px;
+        letter-spacing: 2px;
+        color:orange;
+        text-align: center;
+    }
+
+    .logo-text{
+        display: block;
+        font-size:40px; margin-top: -100px; margin-bottom: 100px; color:springgreen;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-family: Arial, Helvetica, sans-serif;
+        animation: fade 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s;
+    animation-fill-mode: forwards;
+    }
+
+@keyframes shut{
+    from{height: 100%;}
+    to{height: 40%;}
+
+}
+
+@keyframes fade{
+    from{opacity: 1;}
+    to{opacity: 0; display: none;}
+
+}
+
+
+@keyframes fadeIn{
+    from{ margin-top:-200px; opacity: 0;}
+    to{ margin-top:0px;  opacity: 1; }
+
+}
+    @keyframes bulnrot {
+        0% {
+            transform: scale(1, 1) rotate(0deg);
         }
-    </style>
+
+        10% {
+            transform: scale(0.8, 0.8);
+        }
+
+        40% {
+            transform: rotate(180deg);
+        }
+
+        80% {
+            transform: scale(0.5, 0.5);
+        }
+
+        100% {
+            transform: scale(1, 1) rotate(359deg);
+        }
+    }
+
+    @keyframes bulge {
+        from {
+            transform: scale(1, 1);
+        }
+
+        to {
+            transform: scale(0.5, 0.5);
+        }
+    }
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(359deg);
+        }
+    }
+</style>
 {% endblock head%}
 {% block content %}
-<div class="container">
-    <div class="row">
+<div class="logo" style="width:100%; position:absolute; display: flex; z-index: 100000; align-items: center; justify-content: center; flex-direction: column; background:rgb(70, 189, 86);">
+    <div class="logo-text">WILD-LIVE</div>
+    <div uk-parallax="scale: 1,0.2; y: 0,120; opacity:1,0; viewport: 1.2;">
+        <div class="bulging loc_loader" style="  animation-delay: 0.4s; ">
+            <div class="bulging-and-rotation" style="width:100px;  border:5px dashed rgb(255, 255, 255);  height:100px; border-radius: 100%; background:rgba(236, 236, 236, 0.185);"></div>
+        </div>
+        <div class="marker" style="width:200px;height:200px; background: brown;"></div>
+    </div>
+</div>
+<div class="">
+    <div class="">
         <!-- <div class="container" id="location" style="margin: 0 auto">
             <h3>You are at {{location}}.</h2>
         </div> -->
-        <div class="container" id="location" style="margin: 0 auto">
-            <!-- <h3>You are at {{location}}.</h2> -->
-            <h3 id="late"></h3>
-            <h3 id="longi"></h3>
-            <h3 id="address">You are at: {{location}} </h3>
-        </div>
-    
-        {% for animal in object_list %}
+        <!-- <div class="container" id="location" style="margin: 0 auto">
+            <font face="San-Serif">Location: {{animalName.location}}</font>
+        </div> -->
+
+        <!-- {% for animal in object_list %}
         <div class="col-lg-3 col-md-4 col-xs-6">
-            <a  href="{{animal.get_absolute_url}}" data-caption="Caption 2">
-                <img src="{{ animal.image.url }}" alt="" class="img-responsive" >
-                <!-- <a href="{{animal.get_absolute_url}}"> -->
+            <a href="{{animal.get_absolute_url}}" data-caption="Caption 2">
+                <img src="{{ animal.image.url }}" alt="" class="img-responsive">
                 <h3>{{ animal.name }}</h1>
-                    <!-- </a> -->
             </a>
         </div>
-        {% endfor %}
+        {% endfor %} -->
+        <div class="port" style="width:100%; position: absolute; z-index: 1000; top:40%; box-sizing: border-box;">
+            <div class="header loc_text" uk-parallax="scale:1,1.2; viewport: 0.8;">Locating you at: {{location}}</div>
+            <div style="display:flex; margin: auto; flex-wrap: wrap; justify-content: center; padding:10px 0 10px 0;">
+                {% for animal in object_list %}
+                <a href="{{animal.get_absolute_url}}" data-caption="Caption 2">
+                    <div class="wild-container" style="background-image:url({{animal.image.url}})">
+
+
+                    </div>
+                    <div class="title">{{ animal.name }}</div>
+                    {% endfor %}
+            </div></a>
+            <br /><br /><br />
+
+        </div>
     </div>
 </div>
 
@@ -71,7 +258,7 @@
                             var address = document.getElementById('address');
                             address.innerHTML += results[0].formatted_address;
                             console.log(results[0].formatted_address);
-                            formattedAdd=results[0].formatted_address;
+                            formattedAdd = results[0].formatted_address;
                         } else {
                             window.alert('No results found');
                         }
