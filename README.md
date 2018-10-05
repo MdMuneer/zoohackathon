@@ -1,4 +1,4 @@
-# Wild-live
+# WILD-LIVE: A TOOL FOR EDUCATING AND MAKING PEOPLE AWARE ABOUT ILLEGAL WILDLIFE TRADE
+# BUILT BY ME AND MY TEAM AT ZOOHACKATHON DELHI 2018
 
-A a tool that me and my team built at zoohackthon India to make people aware of wildlife trade.
 
